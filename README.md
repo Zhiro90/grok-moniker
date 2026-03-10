@@ -2,7 +2,7 @@
 
 [![Install Script](https://img.shields.io/badge/Install-UserScript-232323?style=for-the-badge&logo=javascript)](https://raw.githubusercontent.com/Zhiro90/grok-moniker/main/grok-moniker.user.js)[![Downloads](https://img.shields.io/greasyfork/dt/569204?style=for-the-badge&color=2b5b84)](https://greasyfork.org/scripts/569204)[![GreasyFork](https://img.shields.io/badge/GreasyFork-Page-c1282d?style=for-the-badge)](https://greasyfork.org/scripts/569204)[![License](https://img.shields.io/badge/License-MIT-3a7a40?style=for-the-badge)](https://github.com/Zhiro90/grok-moniker/blob/main/LICENSE)
 
-A lightweight UserScript that adds a title management UI to Grok's Imagine carousel. Keep track of your generations with local storage, live filtering, and simple JSON backups.
+A lightweight UserScript that adds a custom title management UI to Grok's Imagine carousel for easier organization, search, and tracking your generated media. Persistent through local storage, live filtering, and simple JSON backups.
 
 ![Preview](pics/screenshot.png)
 
