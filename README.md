@@ -6,6 +6,10 @@ A lightweight UserScript that adds a custom title management UI to Grok's Imagin
 
 ![Preview](pics/screenshot.png)
 
+## 📢 What's New (v1.1)
+
+* Right-Side Layout Inversion: The entire title UI has been moved to the right side of the carousel to adapt to Grok's recent container updates and avoid clipping.
+    
 ## ✨ Features
 
 * **Custom Titles:** Add, edit, and delete custom names for your generated images directly within the carousel interface.
@@ -19,7 +23,7 @@ A lightweight UserScript that adds a custom title management UI to Grok's Imagin
 1.  Install a UserScript manager:
     * **Chrome/Edge:** [Tampermonkey](https://www.tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/)
     * **Firefox:** [Violentmonkey](https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/) or [Tampermonkey](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/)
-2.  Install the script directly from [GreasyFork](https://greasyfork.org/scripts/569204) or click the **Install Script** badge above.
+2.  Click the **Install Script** button at the top of this page, or install it directly from [GreasyFork](https://greasyfork.org/scripts/569204). JS file also available in [releases](https://github.com/Zhiro90/grok-moniker/releases/latest)
 
 ## 🛠️ Usage
 
