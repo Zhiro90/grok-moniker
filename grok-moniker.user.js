@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Grok Moniker
 // @namespace    https://github.com/Zhiro90
-// @version      1.0
+// @version      1.1
 // @description  Adds a title management UI to Grok's Imagine carousel. Includes local storage, JSON import/export, live filtering, and sticky controls.
 // @author       Zhiro90
 // @match        *://grok.com/*
@@ -18,7 +18,7 @@
     'use strict';
 
     const STORAGE_KEY = "grok_titles_v1";
-    const LEFT_WIDTH = 220;
+    const RIGHT_WIDTH = 220; // Modificado para el lado derecho
     let titlesVisible = true; 
 
     function loadData() {
@@ -37,8 +37,9 @@
             carousel.dataset.expanded = "true";
             carousel.style.boxSizing = "content-box";
             if (titlesVisible) {
-                carousel.style.paddingLeft = `${LEFT_WIDTH}px`;
-                carousel.style.marginLeft = `-${LEFT_WIDTH}px`;
+                // Invertido: Ahora el padding y margen negativo expanden el carrusel a la derecha
+                carousel.style.paddingRight = `${RIGHT_WIDTH}px`;
+                carousel.style.marginRight = `-${RIGHT_WIDTH}px`;
             }
         }
 
@@ -70,14 +71,16 @@
             const titleCol = document.createElement("div");
             titleCol.className = "grok-title-ui";
             titleCol.style.position = "absolute";
-            titleCol.style.right = "100%";
+            // Invertido: Anclado al borde derecho del botón, colgando hacia la derecha
+            titleCol.style.left = "100%";
             titleCol.style.top = "50%";
             titleCol.style.transform = "translateY(-50%)";
-            titleCol.style.width = LEFT_WIDTH + "px";
+            titleCol.style.width = RIGHT_WIDTH + "px";
             titleCol.style.display = titlesVisible ? "flex" : "none"; 
             titleCol.style.alignItems = "center";
-            titleCol.style.justifyContent = "flex-end";
-            titleCol.style.paddingRight = "12px";
+            // Invertido: Alineado desde el inicio del nuevo espacio
+            titleCol.style.justifyContent = "flex-start";
+            titleCol.style.paddingLeft = "12px";
             titleCol.style.zIndex = "100";
 
             titleCol.onclick = e => e.stopPropagation();
@@ -112,7 +115,7 @@
                 pill.style.background = "rgba(40, 40, 40, 0.9)";
                 pill.style.border = "1px solid #444";
                 pill.style.borderRadius = "999px";
-                pill.style.maxWidth = (LEFT_WIDTH - 20) + "px";
+                pill.style.maxWidth = (RIGHT_WIDTH - 20) + "px";
                 pill.style.overflow = "hidden";
 
                 const text = document.createElement("span");
@@ -160,7 +163,7 @@
                 const input = document.createElement("input");
                 input.type = "text";
                 input.value = data[id] || "";
-                input.style.width = (LEFT_WIDTH - 20) + "px";
+                input.style.width = (RIGHT_WIDTH - 20) + "px";
                 input.style.fontSize = "13px";
                 input.style.fontWeight = "500";
                 input.style.padding = "6px 10px";
@@ -170,7 +173,6 @@
                 input.style.color = "#fff";
                 input.style.outline = "none";
 
-                // MEJORA: Evitar que guarde dos veces seguidas si presionas Enter y luego se dispara el onblur
                 let isSaved = false;
                 function commitSave() {
                     if (isSaved) return;
@@ -192,7 +194,6 @@
                     }
                 };
                 
-                // MEJORA: Guarda al dar clic fuera de la caja
                 input.onblur = commitSave;
                 
                 input.onclick = e => { e.preventDefault(); e.stopPropagation(); };
@@ -211,23 +212,22 @@
         const controls = document.createElement("div");
         controls.className = "grok-controls";
         
-        // MEJORA: Propiedades "Sticky" para que el encabezado no se pierda al hacer scroll
         controls.style.position = "sticky";
         controls.style.top = "0px";
-        controls.style.zIndex = "200"; // Tiene que estar por encima de todo el carrusel
-        controls.style.background = "rgba(10, 10, 10, 0.95)"; // Fondo semitransparente oscuro
-        controls.style.backdropFilter = "blur(8px)"; // Da un efecto de cristal/acrílico
+        controls.style.zIndex = "200"; 
+        controls.style.background = "rgba(10, 10, 10, 0.95)"; 
+        controls.style.backdropFilter = "blur(8px)"; 
         controls.style.padding = "8px 0";
         controls.style.margin = "0";
         
         controls.style.display = "flex";
         controls.style.alignItems = "center";
+        // Al usar flex-end con el layout orientado a la derecha, los controles se posicionan justo encima de la columna de títulos.
         controls.style.justifyContent = titlesVisible ? "flex-end" : "center";
         controls.style.gap = "8px";
         controls.style.width = "100%";
         controls.style.paddingRight = titlesVisible ? "4px" : "0px";
 
-        // Filtro en vivo
         const filterInput = document.createElement("input");
         filterInput.type = "text";
         filterInput.placeholder = "🔍 Filter...";
@@ -261,7 +261,6 @@
             });
         };
 
-        // Botón Importar Archivo JSON
         const importBtn = document.createElement("button");
         importBtn.innerHTML = "📥";
         importBtn.title = "Import data (JSON)";
@@ -296,7 +295,6 @@
             fileInput.click();
         };
 
-        // Botón Exportar Archivo JSON
         const exportBtn = document.createElement("button");
         exportBtn.innerHTML = "📤";
         exportBtn.title = "Export data (JSON)";
@@ -320,7 +318,6 @@
             URL.revokeObjectURL(url);
         };
 
-        // Botón Ocultar/Mostrar Títulos
         const toggleBtn = document.createElement("button");
         toggleBtn.innerHTML = titlesVisible ? "👁️" : "🙈";
         toggleBtn.title = "Toggle titles visibility";
@@ -336,8 +333,9 @@
             toggleBtn.innerHTML = titlesVisible ? "👁️" : "🙈";
             if (titlesVisible) {
                 toggleBtn.style.opacity = "0.6";
-                carousel.style.paddingLeft = `${LEFT_WIDTH}px`;
-                carousel.style.marginLeft = `-${LEFT_WIDTH}px`;
+                // Invertido: Restaurar padding derecho
+                carousel.style.paddingRight = `${RIGHT_WIDTH}px`;
+                carousel.style.marginRight = `-${RIGHT_WIDTH}px`;
                 carousel.querySelectorAll('.grok-title-ui').forEach(el => el.style.display = 'flex');
                 
                 filterInput.style.display = "block";
@@ -347,8 +345,9 @@
                 controls.style.paddingRight = "4px";
             } else {
                 toggleBtn.style.opacity = "1";
-                carousel.style.paddingLeft = `0px`;
-                carousel.style.marginLeft = `0px`;
+                // Invertido: Colapsar padding derecho
+                carousel.style.paddingRight = `0px`;
+                carousel.style.marginRight = `0px`;
                 carousel.querySelectorAll('.grok-title-ui').forEach(el => el.style.display = 'none');
                 
                 filterInput.style.display = "none";
