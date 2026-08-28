@@ -6,6 +6,10 @@ A lightweight UserScript that adds a custom title management UI to Grok's Imagin
 
 ![Preview](pics/screenshot.png)
 
+## 📢 What's New (v1.1)
+
+* Right-Side Layout Inversion: The entire title UI has been moved to the right side of the carousel to adapt to Grok's recent container updates and avoid clipping.
+    
 ## ✨ Features
 
 * **Custom Titles:** Add, edit, and delete custom names for your generated images directly within the carousel interface.
